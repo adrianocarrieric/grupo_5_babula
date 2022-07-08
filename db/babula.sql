@@ -22,7 +22,7 @@ CREATE TABLE `users` (
 CREATE TABLE `products` (
     `id` INT AUTO_INCREMENT,
     `title` VARCHAR(30) NOT NULL,
-    `prince` DECIMAL NOT NULL,
+    `price` DECIMAL NOT NULL,
     `ingredients` VARCHAR(255) NOT NULL,
     `img` TEXT NOT NULL,
     `description` LONGTEXT NOT NULL,
