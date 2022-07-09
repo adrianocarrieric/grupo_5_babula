@@ -10,7 +10,7 @@ module.exports = (sequelize, dataTypes) => {
         title: {
             type: dataTypes.STRING
         },
-        prince: {
+        price: {
             type: dataTypes.INTEGER
         },
         ingredients: {
@@ -36,13 +36,13 @@ module.exports = (sequelize, dataTypes) => {
     }
 
     const Product = sequelize.define(alias, cols, config);
-
-    /* Product.associate = function (models) {
+    
+   /*   Product.associate = function (models) {
         Product.hasOne(models.Category, {
             as: "category",
             foreignKey: 'id',
             timestamps: false
         })
-    } */
+    }  */
     return Product;
 }

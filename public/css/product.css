@@ -123,13 +123,13 @@ p.product-name {
 
 /* Precio & Agregar al carrito */
 
-.prince {
+.price {
     font-size: 25px;
     color: var(--naranja);
     font-weight: bold;
 }
 
-.prince-sold {
+.price-sold {
     text-align: right;
     padding: 30px;
 

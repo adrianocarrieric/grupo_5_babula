@@ -9,13 +9,13 @@ CREATE TABLE `users` (
     `email` VARCHAR(100) NOT NULL,
     `password` VARCHAR(100) NOT NULL,
     `roleId` INT NOT NULL,
+    `avatar` TEXT NOT NULL,
     PRIMARY KEY (`id`)
 );
 
-    CREATE TABLE `roles` (
+CREATE TABLE `roles` (
     `id` INT AUTO_INCREMENT,
     `name` VARCHAR(50) NOT NULL,
-    `description` LONGTEXT NOT NULL,
     PRIMARY KEY (`id`)
 );
 
@@ -27,15 +27,15 @@ CREATE TABLE `products` (
     `img` TEXT NOT NULL,
     `description` LONGTEXT NOT NULL,
     `categoryId` INT NOT NULL,
+    `todaysDay` VARCHAR(10) NOT NULL,
     PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `categories` (
     `id` INT AUTO_INCREMENT,
     `name` VARCHAR(50) NOT NULL,
-    `description` LONGTEXT NOT NULL,
     PRIMARY KEY (`id`)
-    );
+);
 
 
 ALTER TABLE `users` ADD CONSTRAINT `FK_3fa5fedc-462c-486c-857f-04080227fb00` FOREIGN KEY (`roleId`) REFERENCES `roles`(`id`)  ;
