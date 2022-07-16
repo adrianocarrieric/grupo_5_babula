@@ -20,7 +20,7 @@ router.get('/create', authMiddleware, productsController.productCreate);
 router.post('/', uploadFile.single("product_image") , productsController.store); 
 
 /*** EDIT ONE PRODUCT ***/ 
-router.get('/edit/:id', productsController.productEdit); 
+router.get('/edit/:id', authMiddleware, productsController.productEdit); 
 router.patch('/edit/:id', uploadFile.single("img"), productsController.update); 
 
 /*** GET ONE PRODUCT ***/ 

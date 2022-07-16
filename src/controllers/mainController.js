@@ -1,20 +1,18 @@
 //const { create } = require('domain'); //
-const fs = require('fs');
-const path = require('path');
 
-const productsFilePath = path.join(__dirname, '../data/productsDataBase.json');
-const products = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
+const db = require("../database/models")
+const sequelize = db.sequelize;
 
-const todaysDay = products.filter(function(plato){
-    return plato.todaysDay == true
-})
+const Products = db.Product
 
 const controller = {
     index: (req, res) => {
-        res.render('index', {
-            todaysDay
-        });
-    },
-};
+        Products.findAll({where: { todaysDay: 1 }
+        })
+            .then(todaysDay => {
+                res.render('./index', { todaysDay })
+            })
+    }
+}
 
 module.exports = controller;

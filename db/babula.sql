@@ -1,5 +1,7 @@
 DROP DATABASE IF EXISTS `babula`;
+
 CREATE DATABASE `babula`;
+
 USE `babula`;
 
 CREATE TABLE `users` (
@@ -37,7 +39,12 @@ CREATE TABLE `categories` (
     PRIMARY KEY (`id`)
 );
 
+ALTER TABLE
+    `users`
+ADD
+    CONSTRAINT `FK_3fa5fedc-462c-486c-857f-04080227fb00` FOREIGN KEY (`roleId`) REFERENCES `roles`(`id`);
 
-ALTER TABLE `users` ADD CONSTRAINT `FK_3fa5fedc-462c-486c-857f-04080227fb00` FOREIGN KEY (`roleId`) REFERENCES `roles`(`id`)  ;
-
-ALTER TABLE `products` ADD CONSTRAINT `FK_bf67147f-695d-45a2-b4ca-7bc7314d4132` FOREIGN KEY (`categoryId`) REFERENCES `categories`(`id`)  ;
+ALTER TABLE
+    `products`
+ADD
+    CONSTRAINT `FK_bf67147f-695d-45a2-b4ca-7bc7314d4132` FOREIGN KEY (`categoryId`) REFERENCES `categories`(`id`);

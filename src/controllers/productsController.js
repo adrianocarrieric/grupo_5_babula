@@ -1,108 +1,55 @@
 const fs = require('fs');
 const path = require('path');
-const db = require("../database/models")
+const db = require("../database/models");
 const sequelize = db.sequelize;
 
-/*const productsFile = path.join(__dirname, '../data/productsDataBase.json');
-const products = JSON.parse(fs.readFileSync(productsFile, 'utf-8'));*/
+const Products = db.Product
+const productImageRoute = path.join(__dirname, '..', '..', 'public', 'images', 'products')
 
 const controller = {
     index: (req, res) => {
-        db.Product.findAll()
+        Products.findAll()
             .then(products => {
-                res.render("./products/products", { products })
+                res.render('./products/products', { products })
             })
     },
-    /*index: (req, res) => {
-    res.render('./products/products', {
-            products
-        }) },*/
 
     detail: (req, res) => {
-        db.Product.findByPk(req.params.id)
+        let productId = req.params.id
+        Products.findByPk(productId)
             .then(plato => {
                 res.render('./products/detail', { plato });
             });
     },
-    /*detail: (req, res) => {
-        let id = req.params.id
-        let plato = products.find(plato => plato.id == id)
-        res.render('./products/detail', {
-            plato
-        })
-    },*/
 
     productCreate: (req, res) => {
         res.render('./products/productCreateForm');
-
     },
+
     store: function (req, res) {
-        db.Product.create()
-        let nuevoProducto = {
-            id: products[products.length - 1].id + 1,
+        Products.create({
             title: req.body.title,
-            description: req.body.description,
+            price: parseInt(req.body.price),
             ingredients: req.body.ingredients,
-            prince: parseInt(req.body.prince),
-            category: req.body.category,
             img: req.file ? req.file.filename : "default-image.jpg",
-            todaysDay: Boolean(req.body.todaysDay)
-        }
-        products.push(nuevoProducto);
-        fs.writeFileSync(productsFile, JSON.stringify(products, null, " "))
-            .then(product => {
+            description: req.body.description,
+            categoryId: req.body.category,
+            todaysDay: req.body.todaysDay
+        })
+
+            .then(() => {
                 return res.redirect('/products')
             })
             .catch(error => res.send(error))
     },
 
-    /*
-store: (req, res) => {
-    let nuevoProducto = {
-        id: products[products.length - 1].id + 1,
-        title: req.body.title,
-        description: req.body.description,
-        ingredients: req.body.ingredients ,
-        price: parseInt(req.body.price),
-        category: req.body.category,
-        img: req.file ? req.file.filename: "default-image.jpg" ,
-        todaysDay: Boolean(req.body.todaysDay)
-    }
-    products.push(nuevoProducto);
-    fs.writeFileSync(productsFile, JSON.stringify(products, null, " "));
-
-    res.redirect("/products");
-}*/
-
     productEdit: (req, res) => {
-        let id = req.params.id
-        let plato = products.find(plato => plato.id == id);
-        let productToEdit = products.find(product => product.id == id);
-        res.render('./products/productEditForm', { plato, productToEdit });
-
+        let productId = req.params.id
+        Products.findByPk(productId)
+            .then(Plato => {
+                res.render('./products/productEditForm', { Plato })
+            })
     },
-    // Update - Method to update
-
-    /* update: function (req,res) {
-    const id = req.params.id;
-    Product
-    .update(
-        {
-            id: productToEdit.id,
-            title: req.body.title,
-            price: parseInt(req.body.price),
-            ingredients: req.body.ingredients,
-            category: req.body.category,
-            description: req.body.description,
-            img: req.file ? req.file.filename : productToEdit.img,
-            todaysDay: Boolean(req.body.todaysDay)
-        },
-        {
-            where: {id:id}
-        })
-    .then(()=> {
-        return res.redirect('/products')})            
-    .catch(error => res.send(error)) */
 
     update: (req, res) => {
         const id = req.params.id;
@@ -114,48 +61,32 @@ store: (req, res) => {
             ingredients: req.body.ingredients,
             category: req.body.category,
             description: req.body.description,
-            img: req.file ? req.file.filename : productToEdit.img,
-            todaysDay: Boolean(req.body.todaysDay)
-        }
-
-        let indice = products.findIndex(product => {
-            return product.id == id
+            img: req.file ? req.file.filename : Products.img,
+            todaysDay: req.body.todaysDay
+        }, {
+            where: { id: productId }
         })
-        products[indice] = productToSave;
-
-        fs.writeFileSync(productsFile, JSON.stringify(products, null, " "));
-        res.redirect("/products")
+            .then(() => {
+                res.redirect('/products/detail/' + productId)
+            })
     },
-
-    /*delete: function (req,res) {
-    let movieId = req.params.id;
-    Movies
-    .findByPk(movieId)
-    .then(Movie => {
-        return res.render(path.resolve(__dirname, '..', 'views',  'moviesDelete'), {Movie})})
-    .catch(error => res.send(error)) */
 
     destroy: (req, res) => {
-        const id = req.params.id;
-        let finalProducts = products.filter(product => product.id != id);
-
-        fs.writeFileSync(productsFile, JSON.stringify(finalProducts, null, ' '));
-        res.redirect("/products")
+        let productId = req.params.id;
+        Products.findByPk(productId)
+            .then(productToDestroy => {
+                let productImageDirectory = path.join(productImageRoute, productToDestroy.img)
+                fs.unlinkSync(productImageDirectory)
+                Products.destroy({ where: { id: productId }, force: true })
+                    .then(() => {
+                        res.redirect('/products')
+                    })
+            })
     },
-
-    /* buscar:(req, res) => {
-    fetch('http://www.omdbapi.com/?apikey=d4e35e92&t'+ req.body.titulo)
-    .then(response=>response.json())
-    .then (movie => {
-        res.render('moviesDetailOmdb', {movie})
-    })
-    .catch(error => res.send(error)) 
-}  */
 
     shop: (req, res) => {
         res.render('./products/shop');
     }
-
 };
 
 
