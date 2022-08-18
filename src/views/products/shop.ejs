@@ -2,56 +2,90 @@
 <html lang="en">
 
 <!--Head-->
-<%- include("../partials/head" ,{stylesheet:"shop", title:"Carrito de compras"}) %>
+<%- include("../partials/head" ,{ title:"Carrito de compras"}) %>
+  <link rel="stylesheet" href="/css/shop.css">
 
   <body>
     <!--Header-->
-    <%- include("../partials/header", {stylesheet: "styles"}) %>
+    <%- include("../partials/header", {stylesheet: "styles" }) %>
       <main>
         <section class="seccion-compra">
-          <div class="caja-imagen">
-            <img class="img-compra" src="/images/products/borsch.jpeg" alt="" />
-          </div>
-          <section class="detail-of-buy">
-            <div class="caja-texto">
-              <div class="alinear-items">
-                <i class="fas fa-plus-circle"></i>
-                <p>1</p>
-                <i class="fas fa-minus-circle"></i>
-                <div class="separated">
-                  <i class="fas fa-trash"></i>
+          <% if(plato) {%>
+            <div class="caja-imagen">
+              <!--   <img class="img-buy" src="/images/products/borsch.jpeg" alt="" /> -->
+              <img class="img-buy" src="/images/products/<%= plato.img %>" alt="product 1">
+            </div>
+            <section class="detail-of-buy">
+              <div class="caja-texto">
+                <div class="alinear-items">
+                  <i class="fas fa-plus-circle"></i>
+                  <p>1</p>
+                  <i class="fas fa-minus-circle"></i>
+                  <div class="separated">
+                    <i class="fas fa-trash"></i>
+                  </div>
                 </div>
               </div>
-            </div>
-            <section class="finaly-price">
-              <div class="price">
-                <strong>
-                  <p>Sub total:</p>
-                </strong>
-                <p class="separated-name-price">$45</p>
+              <section class="finaly-price">
+                <p class="product-name">
+                  <strong>
+                      <%= plato.title %>
+                  </strong>
+                </p>
+                <div class="price">
+                  <strong>
+                    <p>Sub total: </p>
+                  </strong>
+                  <p class="separated-name-price">
+                    $<%= plato.price %>
+                  </p>
+                </div>
+                <div class="price">
+                  <strong>
+                    <p>Envío:</p>
+                  </strong>
+                  <p class="separated-name-price">$50</p>
+                </div>
+                <div class="price">
+                  <strong>
+                    <p>Total: </p>
+                  </strong>
+                  <% let subtotal=parseInt(plato.price) %>
+                    <% let total=subtotal + 50 %>
+                      <p class=" separated-name-price">$<%=total %>
+                      </p>
+              </section>
               </div>
-              <div class="price">
-                <strong>
-                  <p>Envío:</p>
-                </strong>
-                <p class="separated-name-price">$50</p>
-              </div>
-              <div class="price">
-                <strong>
-                  <p>Total:</p>
-                </strong>
-                <p class=" separated-name-price">$95</p>
+              <section class="buttons_buy">
+                <button>
+                  <p>Finalizar compra</p>
+                </button>
+                <button>
+                  <a href="/products">
+                    <p>Seguir comprando</p>
+                  </a>
+                </button>
+                <form method="POST" action="/products/shop/clear" class="form">
+                  <button type="submit" class="btn btn-primary" name="productToAdd" value="<%= plato.id %>">
+                    <p>Eliminar del carrito</p>
+                  </button>
+                </form>
+              </section>
             </section>
-            </div>
-            <section class="buttons_buy">
-              <button>
-                <p>Finalizar compra</p>
-              </button>
-              <button>
-                <p>Seguir comprando</p>
-              </button>
-            </section>
-          </section>
+            <%} else{%>
+              <section class="detail-of-buy">
+
+                <p> No hay productos en tu carrito.</p>
+                <section class="buttons_buy">
+                  <button>
+                    <a href="/products">
+                      <p>Seguir comprando</p>
+                    </a>
+                  </button>
+                </section>
+              </section>
+              <%}%>
+        </section>
       </main>
       <!--Footer-->
       <%- include("../partials/footer") %>

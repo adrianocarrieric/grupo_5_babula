@@ -2,7 +2,7 @@
 <html lang="en">
 
 <!--Head-->
-<%- include("../partials/head" ,{stylesheet:"styles", title:"Formulario creación de producto"}) %>
+<%- include("../partials/head" ,{stylesheet:"styles", title:"Crear producto"}) %>
 
 	<body>
 		<!--Header-->
@@ -13,13 +13,15 @@
 					<div class="title">
 						<h2 class="products-title">Agregar nuevo menú</h2>
 					</div>
+					<ul class="fails">
+					</ul>
 					<div class="formulario">
-						<form action="/products" method="POST" enctype="multipart/form-data">
+						<form action="/products" method="POST" enctype="multipart/form-data" class="form">
 							<div class="row-product-detail">
 								<div class="col-12 col-md-6">
-									<label for="name" class="form-label">Nombre del plato</label>
-									<input type="text" id="name" name="title" placeholder="Ej: Medovik"
-										class="form-input" required>
+									<label for="title" class="form-label">Nombre del plato</label>
+									<input type="text" id="title" name="title" placeholder="Ej: Medovik"
+										class="form-input" autofocus required>
 								</div>
 								<div class="col-12">
 									<label for="description" class="form-label">Descipción</label>
@@ -52,16 +54,15 @@
 										<option value="1">Entrada</option>
 										<option value="2">Plato principal</option>
 										<option value="3">Postre</option>
-
 									</select>
 								</div>
 								<div class="col-12 col-md-6">
 									<label for="img" class="form-label">Imagen:</label>
 									<form action="/products" method="POST" enctype="multipart/form-data">
-										<input class="form-input" type="file" name="product_image" accept=".jpg, .JPG, .png">
+										<input class="form-input" type="file" id= "image" name="product_img" accept=".jpg, .JPG, .png">
 								</div>
 								<div class="detail-button">
-									<button type="submit" class="create-buttom" name="send-product">Agregar
+									<button type="submit" class="create-buttom"  name="send-product">Agregar
 										producto</button>
 								</div>
 							</div>
@@ -70,9 +71,11 @@
 					</form>
 				</section>
 			</main>
+			
 			<!--Footer-->
 			<%- include("../partials/footer") %>
 				<!--Footer-->
-	</body>
+				<script src="/js/productCreate.js"></script>
+			</body>
 
 </html>

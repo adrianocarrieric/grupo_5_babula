@@ -2,39 +2,41 @@
 <html lang="en">
 
 <!--Head-->
-<%- include("../partials/head" ,{stylesheet:"products",  title:"Productos"}) %>
+<%- include("../partials/head" , {title:"Productos"}) %>
+    <link rel="stylesheet" href="/css/products.css">
 
     <body>
         <!--Header-->
         <%- include("../partials/header") %>
-
-            <main>
-                <section class="main">
-                    <section class="all-products">
-                        <h2 class="recipes">Todos los platos</h2>
-                        <div class="products-list">
-                            <% products.forEach(function(plato){ %>
-                                <article>
-                                    <section class="product-image"><img src="/images/products/<%= plato.img %>" alt="product 1">
-                                    </section>
-                                    <section class="recipes-description">
-                                        <p class="product-name">
-                                            <%= plato.title %>
-                                        </p>
-                                        <p class="product-description">
-                                            <%= plato.description %>
-                                        </p>
-                                        <div class="see-more">
-                                            <a href="/products/detail/<%= plato.id %>">
-                                                <p>Ver detalle</p>
-                                            </a>
-                                        </div>
-                                    </section>
-                                </article>
-                                <% }) %>
-                        </div>
-                    </section>
+            <div class="main">
+                <section class="featured-products">
+                    <h2 class="recipes">Todos los menús</h2>
+                    <div class="products">
+                        <% plato.forEach(function(plato){ %>
+                            <article>
+                                <section class="product-image-container">
+                                    <img class="product-image" src="/images/products/<%= plato.img %>" alt="product 1">
+                                </section>
+                                <section class="recipes-description">
+                                    <p class="product-name">
+                                        <%= plato.title %>
+                                    </p>
+                                    <p class="product-description">
+                                        <%= plato.description %>
+                                    </p>
+                                    <div class="see-more">
+                                        <a href="/products/detail/<%= plato.id %>">
+                                            <p>Ver más</p>
+                                        </a>
+                                    </div>
+                                </section>
+                            </article>
+                            <% }) %>
+                    </div>
+                </section>
+            </div>
             </main>
+
             <!--Footer-->
             <%- include("../partials/footer") %>
                 <!--Footer-->

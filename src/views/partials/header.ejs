@@ -5,8 +5,8 @@
                 <i class="fas fa-bars"></i>
             </div>
             <div class="name">
-                <a href="/">ba</a> <br>
-                <a href="/">bula</a>
+                <a class=logo_topbar href="/"><img src="/images/site/logo-babula.svg" alt="Logo ba bula"></a>
+                <a href="/">Ba Bula</a>
             </div>
         </div>
         <div class="menu-right">
@@ -14,21 +14,23 @@
                 <p class=text-button-menu>Menús</p>
             </a>
             <a href="/products/shop" span title="Carrito"><i class="fas fa-shopping-cart"></i></a>
-
-             <!-- Si el usuario esta logeado y la categoria de un usuario logeado es Admin que me muestre el icono de crear producto-->
-            <% if (locals.userLogged && locals.userLogged.roleId == "Admin") { %>
-            <a href="/products/create" span title="Crear producto"><i class="fas fa-cart-plus"></i></a>
-            <% } %>
-            <% if (locals.isLogged) { %>
-                <a class="avatar&text" href="/user/profile"><img src="/images/users/<%= locals.userLogged.avatar %>"
-                        width="40" style="border-radius: 100%;">
-                    <%= locals.userLogged.firstName%>
-                </a>
-                <a href="/user/logout">Cerrar sesión</a>
-                <% } else { %>
-                    <a class="nav-link" href="/user/register">Registrarse</a>
-                    <a class="nav-link" href="/user/login">Ingresar</a>
-                    <% } %>
+            <!-- Si el usuario esta logeado y la categoria de un usuario logeado es Admin que me muestre el icono de crear producto-->
+            <% if (locals.userLogged && locals.userLogged.roleId==1) { %>
+                <a href="/products/create" span title="Crear producto"><i class="fas fa-cart-plus"></i></a>
+                <% } %>
+                    <% if (locals.isLogged) { %>
+                        <a class="avatar_and_text" href="/user/profile"><img
+                                src="/images/users/<%= locals.userLogged.avatar %>" width="40"
+                                style="border-radius: 100%;">
+                            <p>
+                                <%= locals.userLogged.firstName%>
+                            </p>
+                        </a>
+                        <a href="/user/logout">Cerrar sesión</a>
+                        <% } else { %>
+                            <a class="nav-link" href="/user/register">Registrarse</a>
+                            <a class="nav-link" href="/user/login">Ingresar</a>
+                            <% } %>
         </div>
     </section>
     </div>

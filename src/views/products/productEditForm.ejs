@@ -2,7 +2,7 @@
 <html lang="en">
 
 <!--Head-->
-<%- include("../partials/head" ,{stylesheet:"styles", title:"Formulario de edición de producto"}) %>
+<%- include("../partials/head" ,{stylesheet:"styles", title:"Editar producto"}) %>
 
 	<body>
 		<!--Header-->
@@ -13,9 +13,11 @@
 					<div class="title">
 						<h2 class="products-title">Editar menú</h2>
 					</div>
+					<ul class="fails">
+					</ul>
 					<div class="formulario">
 						<form action="/products/edit/<%= Plato.id %>?_method=PATCH" method="POST"
-							enctype="multipart/form-data">
+							enctype="multipart/form-data" class="form">
 							<div class="row-product-detail">
 								<div class="col-12 col-md-6">
 									<label for="title" class="form-label">Nombre del plato:</label>
@@ -46,14 +48,13 @@
 										</option>
 									</select>
 								</div>
-
 								<div class="col-12 col-md-6">
 									<label for="category" class="form-label">Categoría:</label>
 									<select name="category" id="category" class="form-input">
 										<option value="0" <% if (Plato.categoryId=="0" ) { %> selected <% } %>
 												>Entrada</option>
-										<option value="1" <% if (Plato.categoryId=="1" ) { %> selected <%
-												} %> >Plato principal</option>
+										<option value="1" <% if (Plato.categoryId=="1" ) { %> selected <% } %>
+												>Plato principal</option>
 										<option value="2" <% if (Plato.categoryId=="2" ) { %> selected <% } %>
 												>Postre</option>
 									</select>
@@ -77,6 +78,7 @@
 			<!--Footer-->
 			<%- include("../partials/footer") %>
 				<!--Footer-->
+			<script src="/js/productEdit.js"></script>
 	</body>
 
 </html>

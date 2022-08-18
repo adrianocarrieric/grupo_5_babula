@@ -2,7 +2,8 @@
 <html lang="en">
 
 <!--Head-->
-<%- include("../partials/head" ,{stylesheet:"detail", title:"Detalle de Producto"}) %>
+<%- include("../partials/head" , {title:"Detalle del producto"}) %>
+  <link rel="stylesheet" href="/css/detail.css">
 
   <body>
     <!--Header-->
@@ -10,51 +11,52 @@
 
       <main>
         <section class="main">
-          <section class="featured-products">
-            <div class="products">
-              <article>
-                <img class="product-image" src="/images/products/<%= plato.img %>" alt="product 1">
-                <section class="purchase-product">
-                  <section class="recipes-description">
-                    <p class="product-name">
-                      <%= plato.title %>
-                    </p>
-                    <p class="product-description">
-                      <%= plato.description %>
-                    </p>
-                    <p class="product-description">
-                      <%= plato.ingredients %>
-                    </p>
-                    <p class="product-price">
-                      $ <%= plato.price %> .-
-                    </p>
-                  </section>
-                  <section class="buttons-product">
-                    <% if (locals.userLogged && locals.userLogged.roleId=="Admin" ) { %>
-                      <div class="detail-button">
-                        <a href="/products/edit/<%= plato.id %>">
-                          <p>Editar producto</p>
-                        </a>
-                      </div>
-                      <% } %>
-                        <div class="detail-button">
-                          <a href="/products/shop">
-                            <p>Agregar al carrito</p>
-                          </a>
-                        </div>
-                        <% if (locals.userLogged && locals.userLogged.roleId=="Admin" ) { %>
-                          <div class="detail-button">
-                            <form action="/products/delete/<%= plato.id %>?_method=DELETE" method="POST" class="delete">
-                              <button type="submit">Eliminar</button>
-                              <% } %>
-
-                            </form>
-                          </div>
-                  </section>
-                </section>
-              </article>
+          <section class="product-detail">
+            <div class="image-description">
+              <img class="product-image-detail" src="/images/products/<%= plato.img %>" alt="product 1">
+            </div>
+            <div class="recipes-description">
+              <div class="product-name">
+                <p>
+                  <%= plato.title %>
+                </p>
+              </div>
+              <p class="product-description">
+                <%= plato.description %>
+              </p>
+              <p class="product-description">
+                Ingredientes: <%= plato.ingredients %>
+              </p>
+              <p class="product-price">
+                $ <%= plato.price %>
+              </p>
             </div>
           </section>
+          <section class="buttons-detail">
+            <div class="detail-button">
+              <form method="POST" action="/products/shop/add" class="form">
+                <button type="submit" class="btn btn-primary" name="productToAdd" value="<%= plato.id %>">
+                  <p>Agregar al carrito</p>
+                </button>
+              </form>
+            </div>
+            <% if (locals.userLogged && locals.userLogged.roleId==1) { %>
+              <div class="detail-button">
+                <a href="/products/edit/<%= plato.id %>">
+                  <p>Editar producto</p>
+                </a>
+              </div>
+              <% } %>
+                <% if (locals.userLogged && locals.userLogged.roleId==1 ) { %>
+                  <div class="detail-button">
+                    <form action="/products/delete/<%= plato.id %>?_method=DELETE" method="POST" class="delete">
+                      <button type="submit">Eliminar</button>
+                      <% } %>
+
+                    </form>
+                  </div>
+          </section>
+        </section>
       </main>
       <!--Footer-->
       <%- include("../partials/footer") %>

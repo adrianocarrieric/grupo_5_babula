@@ -4,13 +4,13 @@ const db = require("../database/models");
 const sequelize = db.sequelize;
 
 const Products = db.Product
-const productImageRoute = path.join(__dirname, '..', '..', 'public', 'images', 'products')
+const productsImagesRoute = path.join(__dirname, '..', '..', 'public', 'images', 'products')
 
 const controller = {
     index: (req, res) => {
         Products.findAll()
-            .then(products => {
-                res.render('./products/products', { products })
+            .then(plato => {
+                res.render('./products/products', { plato })
             })
     },
 
@@ -38,7 +38,7 @@ const controller = {
         })
 
             .then(() => {
-                return res.redirect('/products')
+                res.redirect('/products')
             })
             .catch(error => res.send(error))
     },
@@ -49,6 +49,7 @@ const controller = {
             .then(Plato => {
                 res.render('./products/productEditForm', { Plato })
             })
+            .catch(error => res.send(error))
     },
 
     update: (req, res) => {
@@ -69,25 +70,41 @@ const controller = {
             .then(() => {
                 res.redirect('/products/detail/' + productId)
             })
+            .catch(error => res.send(error))
     },
 
     destroy: (req, res) => {
         let productId = req.params.id;
         Products.findByPk(productId)
             .then(productToDestroy => {
-                let productImageDirectory = path.join(productImageRoute, productToDestroy.img)
+                let productImageDirectory = path.join(productsImagesRoute, productToDestroy.img)
                 fs.unlinkSync(productImageDirectory)
                 Products.destroy({ where: { id: productId }, force: true })
                     .then(() => {
                         res.redirect('/products')
                     })
             })
+            .catch(error => res.send(error))
     },
 
     shop: (req, res) => {
-        res.render('./products/shop');
-    }
-};
+        let plato = req.session.productAdded;
+        res.render('./products/shop', { plato });
+    },
 
+    add: (req, res) => {
+        let productToAddId = req.body.productToAdd;
+        Products.findByPk(productToAddId)
+            .then(plato => {
+                req.session.productAdded = plato;
+                res.render('./products/shop', { plato });
+            });
+    },
+
+    clear: (req, res) => {
+        req.session.productAdded = null;
+        res.redirect('/products/shop');
+    }
+}
 
 module.exports = controller;

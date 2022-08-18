@@ -2,28 +2,29 @@
 <html lang="en">
 
 <!--Head-->
-<%- include("./partials/head" , {stylesheet:"styles" , title:"Ba Bula"}) %>
+<%- include("./partials/head" , {stylesheet:"styles" , title:"Home"}) %>
 
     <body>
         <!--Header-->
         <%- include("./partials/header") %>
 
             <main>
-                <section class="main">
-                    <article class="box-experience">
+                <div class="top-banner">
+                    <section class="box-experience">
                         <i class="fas fa-star-of-life"></i>
                         <h4>LA EXPERIENCIA</h4>
                         <p>Ba Bula es un experimento único donde ocurre un acercamiento de la cultura Rusa hacia el
                             paladar.</p>
-                    </article>
-                    <article class="box-experience">
+                    </section>
+                    <section class="box-experience">
                         <i class="fas fa-star-of-life"></i>
                         <h4>NOSOTROS</h4>
                         <p>Lo que comenzó por los años 90' en una cocina a 1.152 km al Oeste de Moscú , </br>
-                            ahora emprende esta comida que nos prepararon nuestras abuelas toda la vida.  
-                          En Ba Bula personas con actividades diferentes como diseñadores, programadores, psicologos y cocineros que se reúnen para celebrar juntos una experiencia gastronómica.</p>
-                    </article>
-
+                            ahora emprende esta comida que nos prepararon nuestras abuelas toda la vida.
+                            En Ba Bula personas con actividades diferentes como diseñadores, programadores, psicologos y
+                            cocineros se reúnen para celebrar juntos una experiencia gastronómica.</p>
+                </div>
+                <div class="main">
                     <section class="featured-products">
                         <h2 class="recipes">Platos nativos del día</h2>
                         <div class="products">
@@ -47,13 +48,14 @@
                                 <% }) %>
                         </div>
                     </section>
-                    <section class="access-menu">
+                    <section class="access-menu2">
                         <div class="clean">
                             <a href="/products">
                                 <p>Todos los menús</p>
                             </a>
                         </div>
                     </section>
+                </div>
             </main>
             <!--Footer-->
             <%- include("./partials/footer") %>

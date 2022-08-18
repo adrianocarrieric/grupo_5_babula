@@ -2,7 +2,7 @@
 <html lang="en">
 
 <!--Head-->
-<%- include("../partials/head" ,{stylesheet:"styles", title:"Formulario creación de producto"}) %>
+<%- include("../partials/head" ,{stylesheet:"styles", title:"Ingresar"}) %>
 
   <body>
     <!--Header-->
@@ -13,28 +13,37 @@
           <div class="title">
             <h2 class="products-title">Ingresar</h2>
           </div>
+          <ul class="fails">
+					</ul>
           <div class="formulario">
-            <form method="POST" action="/user/login">
+            <form method="POST" action="/user/login" class="form">
               <div class="row-product-detail">
                 <div class="col-12 col-md-6">
                   <label class="form-label">Correo electrónico:</label>
-                  <input type="text" name="email" class="form-notification">
-                  <% if (locals.errors && errors.email) { %>
+                  <input type="text" name="email" id="email" class="form-notification" autofocus
+                  <% if (locals.oldData && oldData.email) { %>
+                    value="<%= oldData.email %>" 
+                <% } %>
+                >
+                  <% if (locals.errorMessages && errorMessages.email) { %>
                     <div class="text-danger">
-                      <%= errors.email.msg %>
+                      <%= errorMessages.email.msg %>
                     </div>
                     <% } %>
                 </div>
                 <div class="col-12 col-md-6">
                   <label class="form-label">Contraseña:</label>
-                  <input type="password" name="password" class="form-notification">
+                  <input type="password" name="password" id="password" class="form-notification">
                   <div class="invalid-feedback">
                   </div>
+                  <% if (locals.errorMessages && errorMessages.password) { %>
+                    <p class="text-danger"> <%= errorMessages.password.msg %> </p>
+                <% } %>
                 </div>
                 <div class="col-md-6 my-2">
                   <div class="form-check">
                     <label class="form-check-label">
-                      <input type="checkbox" class="form-check-input" name="remember_user">Recordar mi usuario
+                      <input type="checkbox" class="form-check-input" name="rememberUser">Recordar mi usuario
                     </label>
                   </div>
                 </div>
@@ -47,9 +56,10 @@
           </div>
         </section>
       </main>
+
       <!--Footer-->
       <%- include("../partials/footer") %>
         <!--Footer-->
+<script src="/js/userLogin.js"></script> 
   </body>
-
 </html>
