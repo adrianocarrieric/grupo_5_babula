@@ -25,6 +25,6 @@
         display: flex;
         border-radius: 30px;
         object-fit: cover;
-        overflow: unset;
+        overflow: hidden;
     }
 }

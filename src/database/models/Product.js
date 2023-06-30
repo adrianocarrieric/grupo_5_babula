@@ -36,7 +36,6 @@ module.exports = (sequelize, dataTypes) => {
     }
 
     const Product = sequelize.define(alias, cols, config);
-<<<<<<< HEAD
     
    /*   Product.associate = function (models) {
         Product.hasOne(models.Category, {
@@ -45,15 +44,5 @@ module.exports = (sequelize, dataTypes) => {
             timestamps: false
         })
     }  */
-=======
-
-    Product.associate = function(models) {
-        Product.belongsTo(models.Category, {
-            as: "category",
-            foreignKey: 'categoryId'
-        })
-    }
-
->>>>>>> b965914de49703785da906afae8713434726db97
     return Product;
 }

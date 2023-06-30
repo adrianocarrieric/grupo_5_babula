@@ -64,13 +64,14 @@ const controller = {
             description: req.body.description,
             img: req.file ? req.file.filename : Products.img,
             todaysDay: req.body.todaysDay
-        }, {
+        };
+        Products.update(productToSave, {
             where: { id: productId }
         })
-            .then(() => {
-                res.redirect('/products/detail/' + productId)
-            })
-            .catch(error => res.send(error))
+        .then(() => {
+            res.redirect('/products/detail/' + productId)
+        })
+        .catch(error => res.send(error))
     },
 
     destroy: (req, res) => {
